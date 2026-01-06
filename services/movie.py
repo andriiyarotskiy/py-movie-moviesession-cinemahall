@@ -11,11 +11,13 @@ def get_movies(
         return Movie.objects.filter(
             genres__id__in=genres_ids,
             actors__id__in=actors_ids
-        )
+        ).distinct()
     if genres_ids and not actors_ids:
-        return Movie.objects.filter(genres__id__in=genres_ids)
+        return (Movie.objects.filter(genres__id__in=genres_ids)
+                .distinct())
     if actors_ids and not genres_ids:
-        return Movie.objects.filter(actors__id__in=actors_ids)
+        return (Movie.objects.filter(actors__id__in=actors_ids)
+                .distinct())
     return Movie.objects.all()
 
 
